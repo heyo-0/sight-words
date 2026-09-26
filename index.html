@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <title>Sight Words</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="description" content="Sight word flashcards for early readers.">
+  <meta name="theme-color" content="#fff7e6">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Sight Words">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <link rel="preload" href="fonts/andika-bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg" aria-hidden="true">
+    <span class="shape s1"></span>
+    <span class="shape s2"></span>
+    <span class="shape s3"></span>
+    <span class="shape s4"></span>
+    <span class="shape s5"></span>
+    <span class="shape s6"></span>
+  </div>
+
+  <div id="app">
+    <header class="bar">
+      <button id="levelBtn" class="pill" type="button" aria-label="Choose level">Level 1</button>
+      <div id="progress" class="progress" aria-live="polite">1 / 1</div>
+      <div class="bar-right">
+        <button id="azBtn" class="icon-btn" type="button" aria-label="Sort A to Z" aria-pressed="false" title="A to Z">
+          <span class="az">a→z</span>
+        </button>
+        <button id="shuffleBtn" class="icon-btn" type="button" aria-label="Shuffle words" title="Shuffle">
+          <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M3 7h3.5c2 0 3.3 1 4.5 3l2 4c1.2 2 2.5 3 4.5 3H21M3 17h3.5c1.5 0 2.6-.6 3.5-1.6M21 7h-3.5c-1.5 0-2.6.6-3.5 1.6M18 4l3 3-3 3M18 14l3 3-3 3"/></svg>
+        </button>
+        <button id="speakBtn" class="icon-btn" type="button" aria-label="Say the word" title="Say it">
+          <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4z"/><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="stage" class="stage">
+      <div class="tap-hint left" aria-hidden="true">‹</div>
+      <div id="card" class="card">
+        <div id="word" class="word">the</div>
+      </div>
+      <div class="tap-hint right" aria-hidden="true">›</div>
+    </main>
+
+    <div id="toast" class="toast" aria-live="polite"></div>
+  </div>
+
+  <div id="picker" class="picker" hidden>
+    <div class="picker-box" role="dialog" aria-modal="true" aria-label="Choose a level">
+      <h1>pick a level</h1>
+      <div id="levelList" class="level-list"></div>
+      <button id="closePicker" class="close" type="button" aria-label="Close">✕</button>
+    </div>
+  </div>
+
+  <canvas id="confetti" aria-hidden="true"></canvas>
+
+  <script src="words.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
