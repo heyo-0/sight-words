@@ -68,18 +68,38 @@
     return words()[state.order[state.pos]];
   }
 
+  // One fixed font size per level: the largest size at which the level's widest
+  // word still fits the card, so the size never changes from card to card.
+  let widestWord = null;
+  function findWidestWord() {
+    const probe = document.createElement("span");
+    probe.style.cssText = "position:absolute;visibility:hidden;white-space:nowrap;font:700 100px " + getComputedStyle(wordEl).fontFamily;
+    document.body.appendChild(probe);
+    let best = "", bestW = 0;
+    for (const w of words()) {
+      probe.textContent = w;
+      const width = probe.getBoundingClientRect().width;
+      if (width > bestW) { bestW = width; best = w; }
+    }
+    probe.remove();
+    widestWord = best;
+  }
+
   function fitWord() {
-    // Make the word as large as possible while fitting inside the card.
+    if (!widestWord) findWidestWord();
     const cardRect = card.getBoundingClientRect();
     const maxW = cardRect.width * 0.88;
     const maxH = cardRect.height * 0.6;
     let size = Math.min(maxH, 400);
+    const current = wordEl.textContent;
+    wordEl.textContent = widestWord;
     wordEl.style.setProperty("--word-size", size + "px");
     const w = wordEl.getBoundingClientRect().width;
     if (w > maxW) {
       size = Math.floor(size * (maxW / w));
       wordEl.style.setProperty("--word-size", size + "px");
     }
+    wordEl.textContent = current;
   }
 
   function render(direction) {
@@ -282,6 +302,7 @@
   function setLevel(i) {
     state.level = i;
     store.set("level", i);
+    widestWord = null;
     applyLevelStyling();
     buildOrder();
     render("next");
@@ -385,7 +406,7 @@
   applyLevelStyling();
   buildOrder();
   render();
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitWord);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { widestWord = null; fitWord(); });
 
   // Offline support
   if ("serviceWorker" in navigator) {
