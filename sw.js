@@ -1,6 +1,6 @@
 /* Minimal service worker: caches the app so it opens instantly and works offline.
    Bump CACHE_NAME whenever you change the app or the word lists, so devices pick up the new version. */
-const CACHE_NAME = "sight-words-v1";
+const CACHE_NAME = "sight-words-v2";
 const FILES = [
   "./",
   "./index.html",
